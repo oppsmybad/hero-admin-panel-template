@@ -1,29 +1,62 @@
 {
     "heroes": [
         {
-            "id": 1,
-            "name": "Первый герой",
-            "description": "Первый герой в рейтинге!",
-            "element": "fire"
+            "id": "2205cff0-21cc-420a-be7d-12a59a88afe3",
+            "name": "Spider Man",
+            "description": "111111",
+            "element": ""
         },
         {
-            "id": 2,
-            "name": "Неизвестный герой",
-            "description": "Скрывающийся в тени",
+            "id": "13ed5a94-daa0-4f7d-9f28-9e09a35ef613",
+            "name": "Pantera",
+            "description": "dsadasdas",
+            "element": "Я владею элементом..."
+        },
+        {
+            "id": "8782c965-bd74-4e81-817c-cce83ee1e06f",
+            "name": "sdfsdfsd",
+            "description": "fdsf",
+            "element": ""
+        },
+        {
+            "id": "c873418c-d26c-4c81-8cd8-a4b43ccc97c3",
+            "name": "sadasd",
+            "description": "sadasdas",
+            "element": ""
+        },
+        {
+            "id": "8362e2f8-459b-4a2c-b958-b7e86e6f7fa6",
+            "name": "fghfg",
+            "description": "hfghfgh",
+            "element": ""
+        },
+        {
+            "id": "a68d035c-4000-4288-b065-dcf0443b44e2",
+            "name": "Spider Man",
+            "description": "dsadsadsa",
             "element": "wind"
-        },
-        {
-            "id": 3,
-            "name": "Морской герой",
-            "description": "Как аквамен, но не из DC",
-            "element": "water"
         }
     ],
     "filters": [
-        "all",
-        "fire",
-        "water",
-        "wind",
-        "earth"
+        {
+            "name": "all",
+            "label": "Все"
+        },
+        {
+            "name": "fire",
+            "label": "Огонь"
+        },
+        {
+            "name": "water",
+            "label": "Вода"
+        },
+        {
+            "name": "wind",
+            "label": "Ветер"
+        },
+        {
+            "name": "earth",
+            "label": "Земля"
+        }
     ]
 }
