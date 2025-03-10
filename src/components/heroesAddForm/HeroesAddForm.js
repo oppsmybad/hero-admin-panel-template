@@ -1,54 +1,77 @@
 // Задача для этого компонента:
-// Реализовать создание нового героя с введенными данными. Он должен попадать: ВЫПОЛНЕНО
-// в общее состояние и отображаться в списке + фильтроваться
+// Реализовать создание нового героя с введенными данными. он должен попадать в общее состояние и отображаться в списке + фильтроваться: ВЫПОЛНЕНО
 // Уникальный идентификатор персонажа можно сгенерировать через uiid: ВЫПОЛНЕНО
 // Усложненная задача:
 // Персонаж создается и в файле json при помощи метода POST: ВЫПОЛНЕНО
 // Дополнительно:
-// Элементы <option></option> желательно сформировать на базе
-// данных из фильтров
+// Элементы <option></option> желательно сформировать на базе данных из фильтров: ВЫПОЛНЕНО
 
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useHttp } from "../../hooks/http.hook";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import { heroCreated } from "../../actions/index";
+
+import { heroCreated } from "../../actions";
 
 const HeroesAddForm = () => {
+    // Состояния для контроля формы
+    const [heroName, setHeroName] = useState("");
+    const [heroDescr, setHeroDescr] = useState("");
+    const [heroElement, setHeroElement] = useState("");
+
+    const { filters, filtersLoadingStatus } = useSelector((state) => state);
     const dispatch = useDispatch();
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [element, setElement] = useState("");
+    const { request } = useHttp();
 
-    const onSubmit = (e) => {
+    const onSubmitHandler = (e) => {
         e.preventDefault();
-
+        // Генерация id через библиотеку
         const newHero = {
             id: uuidv4(),
-            name,
-            description,
-            element,
+            name: heroName,
+            description: heroDescr,
+            element: heroElement,
         };
-        // Добавление героя в Redux
-        dispatch(heroCreated(newHero));
 
-        axios
-            .post("http://localhost:3001/heroes", newHero)
-            .then((response) => {
-                console.log("Герой успешно создан:", response.data);
-            })
-            .catch((error) => {
-                console.error("Ошибка при создании героя:", error);
+        // Отправляем данные на сервер в формате JSON
+        // ТОЛЬКО если запрос успешен - отправляем персонажа в store
+        request("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
+            .then((res) => console.log(res, "Отправка успешна"))
+            .then(dispatch(heroCreated(newHero)))
+            .catch((err) => console.log(err));
+
+        // Очищаем форму после отправки
+        setHeroName("");
+        setHeroDescr("");
+        setHeroElement("");
+    };
+
+    const renderFilters = (filters, status) => {
+        if (status === "loading") {
+            return <option>Загрузка элементов</option>;
+        } else if (status === "error") {
+            return <option>Ошибка загрузки</option>;
+        }
+
+        // Если фильтры есть, то рендерим их
+        if (filters && filters.length > 0) {
+            return filters.map(({ name, label }) => {
+                if (name === "all") return;
+
+                return (
+                    <option key={name} value={name}>
+                        {label}
+                    </option>
+                );
             });
-
-        // Очистка формы
-        setName("");
-        setDescription("");
-        setElement("");
+        }
     };
 
     return (
-        <form className="border p-4 shadow-lg rounded" onSubmit={onSubmit}>
+        <form
+            className="border p-4 shadow-lg rounded"
+            onSubmit={onSubmitHandler}
+        >
             <div className="mb-3">
                 <label htmlFor="name" className="form-label fs-4">
                     Имя нового героя
@@ -60,8 +83,8 @@ const HeroesAddForm = () => {
                     className="form-control"
                     id="name"
                     placeholder="Как меня зовут?"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={heroName}
+                    onChange={(e) => setHeroName(e.target.value)}
                 />
             </div>
 
@@ -76,8 +99,8 @@ const HeroesAddForm = () => {
                     id="text"
                     placeholder="Что я умею?"
                     style={{ height: "130px" }}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={heroDescr}
+                    onChange={(e) => setHeroDescr(e.target.value)}
                 />
             </div>
 
@@ -90,14 +113,11 @@ const HeroesAddForm = () => {
                     className="form-select"
                     id="element"
                     name="element"
-                    value={element}
-                    onChange={(e) => setElement(e.target.value)}
+                    value={heroElement}
+                    onChange={(e) => setHeroElement(e.target.value)}
                 >
-                    <option>Я владею элементом...</option>
-                    <option value="fire">Огонь</option>
-                    <option value="water">Вода</option>
-                    <option value="wind">Ветер</option>
-                    <option value="earth">Земля</option>
+                    <option value="">Я владею элементом...</option>
+                    {renderFilters(filters, filtersLoadingStatus)}
                 </select>
             </div>
 

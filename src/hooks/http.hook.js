@@ -43,5 +43,3 @@ export const useHttp = () => {
         // setProcess
     };
 };
-
-export default useHttp;
