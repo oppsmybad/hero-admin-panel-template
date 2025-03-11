@@ -1,22 +1,28 @@
 {
   "heroes": [
     {
-      "id": "46fb598c-99e9-4487-829b-2de1135940c1",
-      "name": "Avatar",
-      "description": "_____",
-      "element": "wind"
-    },
-    {
-      "id": "e684bda9-be93-45e7-81ec-35c67a2673ee",
-      "name": "Iron Man",
-      "description": "____",
+      "id": "834e4744-9197-4b62-8d4a-7d36354a3aef",
+      "name": "Spider Man",
+      "description": "___",
       "element": "fire"
     },
     {
-      "id": "303316cb-7582-4b4f-8e46-8f9a5b1fd6c9",
-      "name": "AquaMan",
-      "description": "____",
+      "id": "09c11eb7-e63b-49c5-b197-dccdd96a7c25",
+      "name": "Aqua Men",
+      "description": "___",
       "element": "water"
+    },
+    {
+      "id": "98e40aa6-d7b2-4b72-827f-49389045b20c",
+      "name": "Avatar Ang",
+      "description": "___",
+      "element": "wind"
+    },
+    {
+      "id": "b7bb4a6f-063e-4ded-8d4d-c49903854e88",
+      "name": "Michael Mayers",
+      "description": "___",
+      "element": "earth"
     }
   ],
   "filters": [
