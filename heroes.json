@@ -7,22 +7,10 @@
       "element": "fire"
     },
     {
-      "id": "09c11eb7-e63b-49c5-b197-dccdd96a7c25",
-      "name": "Aqua Men",
+      "id": "a613ae1d-7389-4504-a164-de2b865f678c",
+      "name": "Aqua Man",
       "description": "___",
       "element": "water"
-    },
-    {
-      "id": "98e40aa6-d7b2-4b72-827f-49389045b20c",
-      "name": "Avatar Ang",
-      "description": "___",
-      "element": "wind"
-    },
-    {
-      "id": "b7bb4a6f-063e-4ded-8d4d-c49903854e88",
-      "name": "Michael Mayers",
-      "description": "___",
-      "element": "earth"
     }
   ],
   "filters": [
