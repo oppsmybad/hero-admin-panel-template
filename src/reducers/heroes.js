@@ -13,29 +13,57 @@ const initialState = {
     heroesLoadingStatus: "idle",
 };
 
-const heroes = createReducer(initialState, (builder) => {
-    builder
-        // Добавляем случаи через команду из createReducer
-        .addCase(heroesFetching, (state) => {
+// Старый формат использования createReducer
+const heroes = createReducer(
+    initialState,
+    // Добавляем случаи которые подвязываем к определенным action в виде объекта
+    {
+        [heroesFetching]: (state) => {
             state.heroesLoadingStatus = "loading";
-        })
-        .addCase(heroesFetched, (state, action) => {
+        },
+        [heroesFetched]: (state, action) => {
             state.heroesLoadingStatus = "idle";
             state.heroes = action.payload;
-        })
-        .addCase(heroesFetchingError, (state) => {
+        },
+        [heroesFetchingError]: (state) => {
             state.heroesLoadingStatus = "error";
-        })
-        .addCase(heroCreated, (state, action) => {
+        },
+        [heroCreated]: (state, action) => {
             state.heroes.push(action.payload);
-        })
-        .addCase(heroDeleted, (state, action) => {
+        },
+        [heroDeleted]: (state, action) => {
             state.heroes = state.heroes.filter(
                 (item) => item.id !== action.payload
             );
-        })
-        .addDefaultCase(() => {}); // Возвращаем дефолтное значение
-});
+        },
+    },
+    [],
+    (state) => state // Возвращаем дефолтное значение
+);
+
+// const heroes = createReducer(initialState, (builder) => {
+//     builder
+//         // Добавляем случаи через команду из createReducer
+//         .addCase(heroesFetching, (state) => {
+//             state.heroesLoadingStatus = "loading";
+//         })
+//         .addCase(heroesFetched, (state, action) => {
+//             state.heroesLoadingStatus = "idle";
+//             state.heroes = action.payload;
+//         })
+//         .addCase(heroesFetchingError, (state) => {
+//             state.heroesLoadingStatus = "error";
+//         })
+//         .addCase(heroCreated, (state, action) => {
+//             state.heroes.push(action.payload);
+//         })
+//         .addCase(heroDeleted, (state, action) => {
+//             state.heroes = state.heroes.filter(
+//                 (item) => item.id !== action.payload
+//             );
+//         })
+//         .addDefaultCase(() => {}); // Возвращаем дефолтное значение
+// });
 
 // const heroes = (state = initialState, action) => {
 //     switch (action.type) {
