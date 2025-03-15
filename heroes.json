@@ -17,6 +17,12 @@
       "name": "Iron Man",
       "description": "___",
       "element": "wind"
+    },
+    {
+      "id": "552e7398-ad19-4c90-85c2-f1c17b9b905f",
+      "name": "Black Adam",
+      "description": "__",
+      "element": "earth"
     }
   ],
   "filters": [
