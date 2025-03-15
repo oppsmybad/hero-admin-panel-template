@@ -1,25 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useHttp } from "../../hooks/http.hook";
 
 const initialState = {
     heroes: [],
     heroesLoadingStatus: "idle",
 };
 
+export const fetchHeroes = createAsyncThunk("heroes/fetchHeroes", () => {
+    const { request } = useHttp();
+    return request("http://localhost:3001/heroes");
+});
+
 const heroesSlice = createSlice({
     name: "heroes", // Префикс для экшенов ("heroes/heroesFetching")
     initialState,
     reducers: {
-        // Передаем наши actions с определенными действиями
-        heroesFetching: (state) => {
-            state.heroesLoadingStatus = "loading";
-        },
-        heroesFetched: (state, action) => {
-            state.heroesLoadingStatus = "idle";
-            state.heroes = action.payload;
-        },
-        heroesFetchingError: (state) => {
-            state.heroesLoadingStatus = "error";
-        },
         heroCreated: (state, action) => {
             state.heroes.push(action.payload);
         },
@@ -28,6 +23,20 @@ const heroesSlice = createSlice({
                 (item) => item.id !== action.payload
             );
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            //fetchHeroes
+            .addCase(fetchHeroes.pending, (state) => {
+                state.heroesLoadingStatus = "loading";
+            })
+            .addCase(fetchHeroes.fulfilled, (state, action) => {
+                state.heroesLoadingStatus = "idle";
+                state.heroes = action.payload;
+            })
+            .addCase(fetchHeroes.rejected, (state) => {
+                state.heroesLoadingStatus = "error";
+            });
     },
 });
 

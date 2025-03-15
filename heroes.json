@@ -19,16 +19,16 @@
       "element": "wind"
     },
     {
-      "id": "552e7398-ad19-4c90-85c2-f1c17b9b905f",
-      "name": "Black Adam",
-      "description": "__",
-      "element": "earth"
-    },
-    {
       "id": "e30b5d41-e87c-4c2c-bdb2-073df3ccfbd3",
       "name": "Adolf Hitler",
       "description": "___",
       "element": "earth"
+    },
+    {
+      "id": "64254084-c3ad-4575-bfde-8551acb001e9",
+      "name": "Swaasdas",
+      "description": "dsadasdas",
+      "element": "fire"
     }
   ],
   "filters": [

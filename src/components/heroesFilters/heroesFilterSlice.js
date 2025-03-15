@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useHttp } from "../../hooks/http.hook";
 
 const initialState = {
     filters: [],
@@ -6,36 +7,43 @@ const initialState = {
     activeFilter: "all",
 };
 
+export const fetchFilters = createAsyncThunk(
+    "heroes/fetchFilters",
+    async () => {
+        const { request } = useHttp();
+        return await request("http://localhost:3001/filters");
+    }
+);
+
 const heroesFiltersSlice = createSlice({
     name: "filters",
     initialState,
     reducers: {
-        // Передаем наши actions с определенными действиями
-        filtersFetching: (state) => {
-            state.filtersLoadingStatus = "loading";
-        },
-        filtersFetched: (state, action) => {
-            state.filtersLoadingStatus = "idle";
-            state.filters = action.payload;
-        },
-        filtersFetchingError: (state) => {
-            state.filtersLoadingStatus = "error";
-        },
+        // Передаем наш активный action
         activeFilterChanged: (state, action) => {
             state.activeFilter = action.payload;
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            // fetchFilters
+            .addCase(fetchFilters.pending, (state) => {
+                state.filtersLoadingStatus = "loading";
+            })
+            .addCase(fetchFilters.fulfilled, (state, action) => {
+                state.filtersLoadingStatus = "idle";
+                state.filters = action.payload;
+            })
+            .addCase(fetchFilters.rejected, (state) => {
+                state.filtersLoadingStatus = "error";
+            });
     },
 });
 
 const { actions, reducer } = heroesFiltersSlice;
 
 // Автоматически генерируемые экшены
-export const {
-    filtersFetching,
-    filtersFetched,
-    filtersFetchingError,
-    activeFilterChanged,
-} = actions;
+export const { activeFilterChanged } = actions;
 
 // Редьюсер для хранилища
 export default reducer;
