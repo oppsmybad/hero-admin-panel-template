@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 
 // Импортируем fetchFilters
-import { fetchFilters, activeFilterChanged } from "../../actions";
+import { fetchFilters } from "../../actions/index";
+import { activeFilterChanged } from "./heroesFilterSlice";
 import Spinner from "../spinner/Spinner";
 
 // Задача для этого компонента:
