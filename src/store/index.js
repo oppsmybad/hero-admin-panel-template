@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import heroes from "../reducers/heroes";
+import heroes from "../components/heroesList/heroesSlice";
 import filters from "../reducers/filters";
 
 // Кастомная middleware для обработки строковых экшенов
