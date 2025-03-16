@@ -1,11 +1,22 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+    createSlice,
+    createAsyncThunk,
+    createEntityAdapter,
+} from "@reduxjs/toolkit";
 import { useHttp } from "../../hooks/http.hook";
 
-const initialState = {
-    filters: [],
+const heroesFiltersAdapter = createEntityAdapter();
+
+// const initialState = {
+//     filters: [],
+//     filtersLoadingStatus: "idle",
+//     activeFilter: "all",
+// };
+
+const initialState = heroesFiltersAdapter.getInitialState({
     filtersLoadingStatus: "idle",
     activeFilter: "all",
-};
+});
 
 export const fetchFilters = createAsyncThunk(
     "heroes/fetchFilters",
@@ -20,7 +31,7 @@ const heroesFiltersSlice = createSlice({
     initialState,
     reducers: {
         // Передаем наш активный action
-        activeFilterChanged: (state, action) => {
+        filtersChanged: (state, action) => {
             state.activeFilter = action.payload;
         },
     },
@@ -32,7 +43,7 @@ const heroesFiltersSlice = createSlice({
             })
             .addCase(fetchFilters.fulfilled, (state, action) => {
                 state.filtersLoadingStatus = "idle";
-                state.filters = action.payload;
+                heroesFiltersAdapter.setAll(state, action.payload);
             })
             .addCase(fetchFilters.rejected, (state) => {
                 state.filtersLoadingStatus = "error";
@@ -42,8 +53,17 @@ const heroesFiltersSlice = createSlice({
 
 const { actions, reducer } = heroesFiltersSlice;
 
+export const { selectAll } = heroesFiltersAdapter.getSelectors(
+    (state) => state.filters
+);
+
 // Автоматически генерируемые экшены
-export const { activeFilterChanged } = actions;
+export const {
+    filtersFetching,
+    filtersFetched,
+    filtersFetchingError,
+    filtersChanged,
+} = actions;
 
 // Редьюсер для хранилища
 export default reducer;

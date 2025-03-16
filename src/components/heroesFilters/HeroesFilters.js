@@ -2,9 +2,10 @@ import { useHttp } from "../../hooks/http.hook";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
+import store from "../../store/index";
 
 // Импортируем fetchFilters и activeFilterChanged
-import { fetchFilters, activeFilterChanged } from "./heroesFilterSlice";
+import { fetchFilters, filtersChanged, selectAll } from "./heroesFilterSlice";
 import Spinner from "../spinner/Spinner";
 
 // Задача для этого компонента:
@@ -13,9 +14,10 @@ import Spinner from "../spinner/Spinner";
 // Активный фильтр имеет класс active: ВЫПОЛНЕНО
 
 const HeroesFilters = () => {
-    const { filters, filtersLoadingStatus, activeFilter } = useSelector(
+    const { filtersLoadingStatus, activeFilter } = useSelector(
         (state) => state.filters
     );
+    const filters = selectAll(store.getState());
     const dispatch = useDispatch();
     const { request } = useHttp();
 
@@ -48,7 +50,7 @@ const HeroesFilters = () => {
                     key={name}
                     id={name}
                     className={btnClass}
-                    onClick={() => dispatch(activeFilterChanged(name))}
+                    onClick={() => dispatch(filtersChanged(name))}
                 >
                     {label}
                 </button>
