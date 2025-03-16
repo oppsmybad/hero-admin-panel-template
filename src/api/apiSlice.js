@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const apiSlice = createApi({
-    // Работа с API частью
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
     tagTypes: ["#Heroes"],
@@ -10,7 +9,6 @@ export const apiSlice = createApi({
             query: () => "/heroes",
             providesTags: ["#Heroes"],
         }),
-        // Работа с мутацией (изменением state) добавляем героев
         createHero: builder.mutation({
             query: (hero) => ({
                 url: "/heroes",
@@ -19,7 +17,6 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ["#Heroes"],
         }),
-        // Работа с мутацией (изменением state) удаляем героев
         deleteHero: builder.mutation({
             query: (id) => ({
                 url: `/heroes/${id}`,

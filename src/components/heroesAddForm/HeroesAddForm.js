@@ -1,11 +1,3 @@
-// Задача для этого компонента:
-// Реализовать создание нового героя с введенными данными. он должен попадать в общее состояние и отображаться в списке + фильтроваться: ВЫПОЛНЕНО
-// Уникальный идентификатор персонажа можно сгенерировать через uiid: ВЫПОЛНЕНО
-// Усложненная задача:
-// Персонаж создается и в файле json при помощи метода POST: ВЫПОЛНЕНО
-// Дополнительно:
-// Элементы <option></option> желательно сформировать на базе данных из фильтров: ВЫПОЛНЕНО
-
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -14,12 +6,11 @@ import store from "../../store";
 import { useCreateHeroMutation } from "../../api/apiSlice";
 
 const HeroesAddForm = () => {
-    // Состояния для контроля формы
     const [heroName, setHeroName] = useState("");
     const [heroDescr, setHeroDescr] = useState("");
     const [heroElement, setHeroElement] = useState("");
 
-    // isloading
+    // isLoading (not used now)
     const [createHero, { isLoading }] = useCreateHeroMutation();
 
     const { filtersLoadingStatus } = useSelector((state) => state.filters);
@@ -27,7 +18,6 @@ const HeroesAddForm = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        // Генерация id через библиотеку
         const newHero = {
             id: uuidv4(),
             name: heroName,
@@ -35,10 +25,8 @@ const HeroesAddForm = () => {
             element: heroElement,
         };
 
-        // Создаем нового героя
         createHero(newHero).unwrap();
 
-        // Очищаем форму после отправки
         setHeroName("");
         setHeroDescr("");
         setHeroElement("");
@@ -51,7 +39,6 @@ const HeroesAddForm = () => {
             return <option>Ошибка загрузки</option>;
         }
 
-        // Если фильтры есть, то рендерим их
         if (filters && filters.length > 0) {
             return filters.map(({ name, label }) => {
                 if (name === "all") return;

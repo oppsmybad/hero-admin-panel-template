@@ -4,14 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import store from "../../store/index";
 
-// Импортируем fetchFilters и activeFilterChanged
 import { fetchFilters, filtersChanged, selectAll } from "./heroesFilterSlice";
 import Spinner from "../spinner/Spinner";
-
-// Задача для этого компонента:
-// Фильтры должны формироваться на основании загфруженных данных: ВЫПОЛНЕНО
-// Фильтры должны отображать только нужных героев при выборе: ВЫПОЛНЕНО
-// Активный фильтр имеет класс active: ВЫПОЛНЕНО
 
 const HeroesFilters = () => {
     const { filtersLoadingStatus, activeFilter } = useSelector(
@@ -21,8 +15,6 @@ const HeroesFilters = () => {
     const dispatch = useDispatch();
     const { request } = useHttp();
 
-    // Запрос на сервер для получения фильтров и последовательной смены состояния
-    // Используем Thunk action
     useEffect(() => {
         dispatch(fetchFilters(request));
     }, []);
@@ -38,9 +30,7 @@ const HeroesFilters = () => {
             return <h5 className="text-center mt-5">Фильтры не найдены</h5>;
         }
 
-        // Данные в json-файле расширяем классами и текстом
         return arr.map(({ name, className, label }) => {
-            // Используем библиотеку classnames и формируем классы динамически
             const btnClass = classNames("btn", className, {
                 active: name === activeFilter,
             });

@@ -7,12 +7,6 @@ import { useHttp } from "../../hooks/http.hook";
 
 const heroesFiltersAdapter = createEntityAdapter();
 
-// const initialState = {
-//     filters: [],
-//     filtersLoadingStatus: "idle",
-//     activeFilter: "all",
-// };
-
 const initialState = heroesFiltersAdapter.getInitialState({
     filtersLoadingStatus: "idle",
     activeFilter: "all",
@@ -30,14 +24,12 @@ const heroesFiltersSlice = createSlice({
     name: "filters",
     initialState,
     reducers: {
-        // Передаем наш активный action
         filtersChanged: (state, action) => {
             state.activeFilter = action.payload;
         },
     },
     extraReducers: (builder) => {
         builder
-            // fetchFilters
             .addCase(fetchFilters.pending, (state) => {
                 state.filtersLoadingStatus = "loading";
             })
@@ -57,7 +49,6 @@ export const { selectAll } = heroesFiltersAdapter.getSelectors(
     (state) => state.filters
 );
 
-// Автоматически генерируемые экшены
 export const {
     filtersFetching,
     filtersFetched,
@@ -65,5 +56,4 @@ export const {
     filtersChanged,
 } = actions;
 
-// Редьюсер для хранилища
 export default reducer;

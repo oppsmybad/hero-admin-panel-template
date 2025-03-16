@@ -7,17 +7,8 @@ import Spinner from "../spinner/Spinner";
 
 import "./heroesList.scss";
 
-// Задача для этого компонента:
-// При клике на "крестик" идет удаление персонажа из общего состояния: ВЫПОЛНЕНО
-// Усложненная задача:
-// Удаление идет и с json файла при помощи метода DELETE: ВЫПОЛНЕНО
-
 const HeroesList = () => {
-    const {
-        data: heroes = [], // массив героев
-        isLoading, // первая стадия загрузки
-        isError, // стадия ошибки
-    } = useGetHeroesQuery();
+    const { data: heroes = [], isLoading, isError } = useGetHeroesQuery();
 
     const [deleteHero] = useDeleteHeroMutation();
 
@@ -34,7 +25,6 @@ const HeroesList = () => {
         }
     }, [heroes, activeFilter]);
 
-    // Функция берет id и по нему удаляет ненужного героя из store
     const onDelete = useCallback((id) => {
         deleteHero(id);
     }, []);
