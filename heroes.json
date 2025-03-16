@@ -1,54 +1,48 @@
 {
-    "heroes": [
-        {
-            "id": "834e4744-9197-4b62-8d4a-7d36354a3aef",
-            "name": "Spider Man",
-            "description": "___",
-            "element": "fire"
-        },
-        {
-            "id": "a613ae1d-7389-4504-a164-de2b865f678c",
-            "name": "Aqua Man",
-            "description": "___",
-            "element": "water"
-        },
-        {
-            "id": "e30b5d41-e87c-4c2c-bdb2-073df3ccfbd3",
-            "name": "Adolf Hitler",
-            "description": "___",
-            "element": "earth"
-        }
-    ],
-    "filters": [
-        {
-            "id": "all",
-            "name": "all",
-            "label": "Все",
-            "className": "btn-outline-dark"
-        },
-        {
-            "id": "fire",
-            "name": "fire",
-            "label": "Огонь",
-            "className": "btn-danger"
-        },
-        {
-            "id": "water",
-            "name": "water",
-            "label": "Вода",
-            "className": "btn-primary"
-        },
-        {
-            "id": "wind",
-            "name": "wind",
-            "label": "Ветер",
-            "className": "btn-success"
-        },
-        {
-            "id": "earth",
-            "name": "earth",
-            "label": "Земля",
-            "className": "btn-secondary"
-        }
-    ]
+  "heroes": [
+    {
+      "id": "15b1f729-86d0-4f16-aa36-fc1b10f1c1f3",
+      "name": "Spider Man",
+      "description": "___",
+      "element": "water"
+    },
+    {
+      "id": "b1f344a5-b4aa-4811-a50e-846fbce10d89",
+      "name": "Iron Man",
+      "description": "___",
+      "element": "fire"
+    }
+  ],
+  "filters": [
+    {
+      "id": "all",
+      "name": "all",
+      "label": "Все",
+      "className": "btn-outline-dark"
+    },
+    {
+      "id": "fire",
+      "name": "fire",
+      "label": "Огонь",
+      "className": "btn-danger"
+    },
+    {
+      "id": "water",
+      "name": "water",
+      "label": "Вода",
+      "className": "btn-primary"
+    },
+    {
+      "id": "wind",
+      "name": "wind",
+      "label": "Ветер",
+      "className": "btn-success"
+    },
+    {
+      "id": "earth",
+      "name": "earth",
+      "label": "Земля",
+      "className": "btn-secondary"
+    }
+  ]
 }

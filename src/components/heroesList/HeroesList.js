@@ -1,13 +1,7 @@
-import { useHttp } from "../../hooks/http.hook";
-import { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-
-import {
-    heroDeleted,
-    fetchHeroes,
-    filteredHeroesSelector,
-} from "./heroesSlice";
+import { useGetHeroesQuery, useDeleteHeroMutation } from "../../api/apiSlice";
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from "../spinner/Spinner";
 
@@ -19,33 +13,35 @@ import "./heroesList.scss";
 // Удаление идет и с json файла при помощи метода DELETE: ВЫПОЛНЕНО
 
 const HeroesList = () => {
-    const filteredHeroes = useSelector(filteredHeroesSelector);
-    const heroesLoadingStatus = useSelector(
-        (state) => state.heroes.heroesLoadingStatus
-    );
-    const dispatch = useDispatch();
-    const { request } = useHttp();
+    const {
+        data: heroes = [], // массив героев
+        isLoading, // первая стадия загрузки
+        isError, // стадия ошибки
+    } = useGetHeroesQuery();
 
-    // Используем наш action
-    useEffect(() => {
-        dispatch(fetchHeroes());
+    const [deleteHero] = useDeleteHeroMutation();
+
+    const activeFilter = useSelector((state) => state.filters.activeFilter);
+
+    const filteredHeroes = useMemo(() => {
+        const filteredHeroes = heroes.slice();
+        if (activeFilter === "all") {
+            return filteredHeroes;
+        } else {
+            return filteredHeroes.filter(
+                (item) => item.element === activeFilter
+            );
+        }
+    }, [heroes, activeFilter]);
+
+    // Функция берет id и по нему удаляет ненужного героя из store
+    const onDelete = useCallback((id) => {
+        deleteHero(id);
     }, []);
 
-    // Функция берет id и по нему удаляет ненужного персонажа из store
-    const onDelete = useCallback(
-        (id) => {
-            // Удаление персонажа по его id
-            request(`http://localhost:3001/heroes/${id}`, "DELETE")
-                .then((data) => console.log(data, "Deleted"))
-                .then(dispatch(heroDeleted(id)))
-                .catch((err) => console.log(err));
-        },
-        [request]
-    );
-
-    if (heroesLoadingStatus === "loading") {
+    if (isLoading) {
         return <Spinner />;
-    } else if (heroesLoadingStatus === "error") {
+    } else if (isError) {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>;
     }
 
