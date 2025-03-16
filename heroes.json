@@ -13,22 +13,10 @@
       "element": "water"
     },
     {
-      "id": "f334f546-81d2-46f7-a546-fb2d2a3dba31",
-      "name": "Iron Man",
-      "description": "___",
-      "element": "wind"
-    },
-    {
       "id": "e30b5d41-e87c-4c2c-bdb2-073df3ccfbd3",
       "name": "Adolf Hitler",
       "description": "___",
       "element": "earth"
-    },
-    {
-      "id": "64254084-c3ad-4575-bfde-8551acb001e9",
-      "name": "Swaasdas",
-      "description": "dsadasdas",
-      "element": "fire"
     }
   ],
   "filters": [
